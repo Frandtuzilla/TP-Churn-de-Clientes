@@ -13,9 +13,24 @@ Proyecto de la materia **Inteligencia Artificial Aplicada a Negocios** (Lic. en 
 ## Estructura
 - `PLAN.md` — plan de trabajo de las 3 semanas.
 - `decisions.md` — registro de decisiones del proyecto.
-- `notebooks/` — `01_eda.ipynb` (exploración) y `02_modelado.ipynb` (modelos).
-- `reports/` — hipótesis y reporte ejecutivo final.
-- `data/raw/` — dataset original.
+- `notebooks/` — `00_semana1.ipynb` (entendimiento + hipótesis); más adelante EDA y modelado.
+- `reports/` — entendimiento de negocio, hipótesis y (más adelante) reporte ejecutivo.
+- `data/raw/` — dataset original (intocable).
+- `src/data_prep.py` — carga y limpieza compartida.
+- `.claude/skills/` — skills del data-science-kit instaladas (ver abajo).
+
+## Skills instaladas (`.claude/skills/`)
+Subagentes del data-science-kit (agus-chaud) que Claude Code usa de forma nativa:
+
+| Skill | Para qué |
+|---|---|
+| `ds-explorer` | EDA: perfila datos, detecta calidad, genera/valida hipótesis |
+| `ds-feature` | Feature engineering (modo ML y modo negocio) |
+| `ds-stats` | Estadística e inferencia (tests, intervalos, supuestos) |
+| `ds-report` | Traduce hallazgos técnicos a reporte ejecutivo |
+| `ds-reviewer` | QA crítico / auditoría del análisis |
+
+(`grill-me` y `gentle-ai` se usan instaladas a nivel global.)
 
 ## Cómo correrlo
 ```bash

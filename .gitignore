@@ -16,4 +16,7 @@ data/interim/
 .DS_Store
 .vscode/
 .idea/
-.claude/
+
+# .claude/: ignoramos runtime, pero SÍ versionamos las skills instaladas
+.claude/*
+!.claude/skills/
