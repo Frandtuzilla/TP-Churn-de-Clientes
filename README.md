@@ -24,9 +24,10 @@ pip install -r requirements.txt
 jupyter notebook
 ```
 
-## Entregas
+## Entregas (consigna v2)
 | Entrega | Fecha |
 |---|---|
-| EDA + Repo + Skills | 05/06 |
-| Notebook Modelado + decisions.md | 12/06 |
+| EDA + Código/GitHub/Skills | 12/06 |
+| Notebook Modelado | 19/06 |
+| decisions.md | 12/06 y 19/06 |
 | Reporte ejecutivo + Defensa oral | 19/06 |

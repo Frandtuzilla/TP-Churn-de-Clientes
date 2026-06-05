@@ -35,23 +35,23 @@
 
 ---
 
-## 3. Calendario real
+## 3. Calendario real (consigna v2)
 
-Hoy es **martes 02/06**. Fechas de entrega:
+Hoy es **viernes 05/06**. Fechas de entrega actualizadas según la consigna nueva:
 
 | Entrega | Qué incluye | Fecha | Días desde hoy |
 |---|---|---|---|
-| EDA + Repo + Skills | Código base en GitHub, entorno y skills, EDA inicial (df.head + perfilado) | **05/06** | 3 días |
-| Notebook Modelado + decisions.md | Baseline + modelo potente con métricas correctas | **12/06** | 10 días |
-| Reporte ejecutivo + Defensa oral | PDF 4–6 pág. sin tecnicismos + presentación de 15 min | **19/06** | 17 días |
+| EDA + Código/GitHub/Skills + decisions.md (parcial) | Repo base, entorno, skills, EDA con hipótesis y gráficos | **12/06** | 7 días |
+| Notebook Modelado + decisions.md (final) + Reporte ejecutivo + Defensa oral | Baseline + árbol (obligatorio) con métricas correctas, PDF 4–6 pág. y presentación de 15 min | **19/06** | 14 días |
 
-> ⚠️ **Inconsistencia a confirmar con el profe:** la *tabla de entregables* pone el **EDA el 05/06**, pero el *cronograma* describe el EDA completo como "Semana 2". Mi recomendación: tener para el 05/06 el **setup + EDA inicial sólido** (perfilado, nulos, distribuciones, primeras hipótesis), y cerrar la validación estadística de las 5 hipótesis camino al 12/06. Así quedás cubierto leas como leas la consigna.
+> ✅ **La contradicción de fechas quedó resuelta** en esta versión: el EDA ahora es claramente el **12/06** (alineado con "Semana 2"). Ya no hace falta consultarlo con el profe.
+> ⚠️ **Ojo:** la entrega final del **19/06** ahora concentra modelado + reporte + defensa. Conviene tener el modelado listo unos días antes para preparar bien la defensa.
 
 ---
 
 ## 4. Las fases
 
-### Fase 1 — Setup y entendimiento del problema  → para el 05/06
+### Fase 1 — Setup y entendimiento del problema  → para el 12/06  *(✅ hecho y subido a GitHub)*
 **Objetivo:** entorno funcionando y entender el negocio antes de tocar datos.
 
 - [ ] Repo en GitHub con la estructura del proyecto (ya armada en esta carpeta).
@@ -64,7 +64,7 @@ Hoy es **martes 02/06**. Fechas de entrega:
   - ¿Qué decisión concreta toma el gerente comercial con tu análisis? (a quién intervenir, con qué presupuesto, cuándo)
 - [ ] **Checkpoint obligatorio:** cargar el dataset y que `df.head()` funcione. Primer commit hecho.
 
-### Fase 2 — EDA + hipótesis de negocio  → 05–12/06
+### Fase 2 — EDA + hipótesis de negocio  → 12/06  *(Semana 2)*
 **Objetivo:** entender quiénes son los clientes y qué patrones predicen churn. Todo con gráficos y tablas, **sin modelar todavía**.
 
 - [ ] Perfilado completo: stats básicas, % de nulos por columna, tipos, cardinalidad de categóricas.
@@ -75,17 +75,19 @@ Hoy es **martes 02/06**. Fechas de entrega:
 - [ ] **Análisis de leakage**: revisar variables sospechosas (sobre todo `Complain`, que el diccionario marca como "último mes"). Documentar el riesgo.
 - [ ] **Split estratificado** train/test (`stratify=y`, `test_size=0.2`, `random_state=42`) — **PRIMERO**, antes de imputar/escalar nada, para no "espiar el examen".
 
-### Fase 3 — Modelado y métricas  → 12/06  *(Semana 2/3 — adelantado, parado)*
+### Fase 3 — Modelado y métricas  → 19/06  *(Semana 3 — requisitos actualizados en consigna v2)*
 **Objetivo:** demostrar que la herramienta funciona y que elegiste la métrica correcta.
 
 - [ ] **Manejo de nulos**: imputación dentro de un pipeline, ajustada solo con train (post-split).
-- [ ] **Modelo baseline**: el más simple posible (DummyClassifier / regla trivial / árbol shallow). Es tu piso de comparación.
-- [ ] **Modelo potente**: Random Forest y/o Gradient Boosting.
-- [ ] **Desbalance** (~17%): `class_weight`, ajuste de umbral, o resampleo — y justificar la elección.
-- [ ] **Métricas correctas** (no accuracy): recall, precision, F1, AUC-ROC, matriz de confusión.
-  - Elegir la métrica prioritaria según el negocio: si perder un cliente cuesta más que intervenir de más → priorizar **recall**.
-- [ ] **Interpretabilidad**: importancia de variables + **SHAP** (qué empuja cada predicción).
+- [ ] **Modelo baseline**: el más simple posible (predecir "no se va nadie" / DummyClassifier). Tu piso de comparación.
+- [ ] **Árbol de decisión — OBLIGATORIO** (fácil de explicarle al gerente). **Random Forest — opcional** (más robusto; pedirle atención extra a la clase minoritaria).
+- [ ] **Validación cruzada `StratifiedKFold` k=5** (repetir 5 veces manteniendo el 17/83) para que el resultado no sea suerte.
+- [ ] **Métricas correctas** (NO accuracy): **Recall** (la más importante para el negocio), **Precision**, **PR-AUC**. Más matriz de confusión.
+- [ ] **Desbalance** (~17%): `class_weight` / atención a la clase minoritaria — justificar la elección.
+- [ ] **Interpretabilidad**: feature importance (ojo, no es causal) + **SHAP global y local**.
 - [ ] `decisions.md` al día con cada decisión y sus alternativas descartadas.
+
+> 🔁 **Ajuste vs. lo ya adelantado:** nuestro `02_modelado.ipynb` usa split simple + F1/ROC-AUC + Random Forest como estrella. Para la consigna v2 hay que **centrarlo en el árbol de decisión**, agregar **StratifiedKFold k=5** y reportar **PR-AUC**. Se adapta cuando lleguemos a S3.
 
 ### Fase 4 — Comunicación y defensa  → 19/06  *(Semana 3 — adelantado, parado)*
 **Objetivo:** traducir todo a decisiones de negocio y defenderlo.
@@ -110,7 +112,7 @@ Decisiones clave que sí o sí documentamos (con qué, por qué, alternativas, c
 - Cómo tratamos los nulos y por qué.
 - Qué hacemos con `Complain` (¿la usamos o la sacamos por leakage?).
 - Tipo de split y por qué estratificado.
-- Métrica prioritaria elegida (recall/precision/F1) y su justificación de negocio.
+- Métrica prioritaria elegida (recall/precision/PR-AUC) y su justificación de negocio.
 - Modelo final elegido y por qué le ganó al baseline.
 - Umbral de decisión (si lo movemos del 0.5 por defecto).
 
@@ -118,7 +120,7 @@ Decisiones clave que sí o sí documentamos (con qué, por qué, alternativas, c
 
 ## 6. Riesgos y cosas a cuidar (las preguntas que te van a hacer)
 
-- **Accuracy engañosa**: decir "no se va nadie" da ~83% y es inútil. Por eso miramos recall/precision/F1/AUC.
+- **Accuracy engañosa**: decir "no se va nadie" da ~83% y es inútil. Por eso miramos recall/precision/PR-AUC.
 - **Data leakage**: ¿`Complain` se registró antes o después de irse? Si fue después, usarla es hacer trampa.
 - **Imputar/escalar antes del split**: contamina el test. Siempre split primero.
 - **Split no estratificado**: con 17% de churn, el azar puede desbalancear train vs. test.
