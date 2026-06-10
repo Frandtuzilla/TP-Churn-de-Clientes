@@ -280,6 +280,11 @@ Complain · Tenure_was_na · tenure_bajo_queja · citytier_alto_queja
 
 ### Cómo cargar en el notebook 02_modelado.ipynb
 
+> ✅ **Vía recomendada — flujo principal:** cargar los parquets directamente.
+> Ya incluyen las 33 features completas: transformaciones estándar (imputación,
+> escalado, OHE) **más** las 3 features derivadas
+> (`Tenure_was_na`, `tenure_bajo_queja`, `citytier_alto_queja`).
+
 ```python
 import pandas as pd
 train = pd.read_parquet("data/processed/features_train.parquet")
@@ -289,10 +294,20 @@ y_test  = test.pop("Churn")
 X_train, X_test = train, test
 ```
 
-O — si querés componerlo con un clasificador dentro de un `Pipeline` único
-(útil para `GridSearchCV`):
+> ⚠️ **Uso avanzado — NO usar para el flujo principal.**
+> El snippet con `build_pipeline()` + `GridSearchCV` aplica solo las
+> transformaciones de `pipeline.py` (imputación, escalado, OHE).
+> **No incluye** las 3 features derivadas
+> (`Tenure_was_na`, `tenure_bajo_queja`, `citytier_alto_queja`),
+> que fueron creadas fuera del pipeline sklearn.
+> Si usás esta vía, debés agregar esas features manualmente al dataset raw
+> antes de pasar por el pipeline; de lo contrario el modelo entrenará
+> con un feature set incompleto.
 
 ```python
+# ⚠️ USO AVANZADO — requiere agregar las features derivadas manualmente
+# (Tenure_was_na, tenure_bajo_queja, citytier_alto_queja) al dataset raw
+# antes de llamar a fit(). NO usar como flujo principal.
 from sklearn.pipeline import Pipeline
 from sklearn.tree import DecisionTreeClassifier
 from src.features.pipeline import build_pipeline
@@ -301,9 +316,7 @@ clf = Pipeline([
     ("features", build_pipeline()),
     ("model", DecisionTreeClassifier(class_weight="balanced", random_state=42)),
 ])
-# fitear sobre el raw post-split (X_train_raw, y_train) — pipeline.py hace
-# el resto de las transformaciones. Igual conviene levantar los parquets
-# para la mayoría de los entrenamientos.
+# clf.fit(X_train_raw_con_derivadas, y_train)
 ```
 
 ### Recomendaciones específicas para el Modeler
