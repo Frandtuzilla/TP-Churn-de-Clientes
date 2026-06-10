@@ -1,5 +1,10 @@
 # Semana 1 — Hipótesis de negocio (formulación)
 
+> 📊 **Validación estadística (Semana 2):** los tests formales (Mann-Whitney U,
+> Chi-cuadrado, Fisher, Spearman), p-valores, tamaños de efecto (rank-biserial,
+> Cramér's V, Odds Ratio) e interpretaciones de negocio de cada hipótesis están
+> en **[`reports/hipotesis.md`](hipotesis.md)**.
+
 Cinco hipótesis formuladas con **lógica de negocio**, elegidas con un foco: **frenar el churn temprano y poder accionar sobre eso**.
 Cada una trae su lógica, una **señal preliminar** en los datos (para no elegir a ciegas) y la **acción de negocio** que habilitaría.
 
